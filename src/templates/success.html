@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}SVG Uploaded Successfully{% endblock %}
+
+{% block content %}
+<div class="success-message">
+    <h2>SVG Uploaded Successfully!</h2>
+    <p>Your floor plan has been uploaded and processed.</p>
+    <a href="{% url 'upload_floor_svg' %}">Upload another floor plan</a>
+</div>
+{% endblock %}
