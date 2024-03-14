@@ -1,33 +1,32 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block content %}
+<div id="svgDisplayArea" class="svg-display">{{ svg_content|safe }}</div>
 
-{% block content %}
-<div id="svgDisplayArea" class="svg-display">
-    {{ svg_content|safe }}
-</div>
-
-<div id="placeDetails" class="place-details" style="display: none;">
-    <!-- Place details will be populated here -->
-</div>
+<div id="placeDetails" class="place-details" style="display: none"></div>
 {{ places|json_script:"places-data" }}
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const places = JSON.parse(document.getElementById('places-data').textContent);
-
-        places.forEach(place => {
-            const imageUrl = "{{MEDIA_URL}}" + place.logo;
-            const pathElement = document.querySelector(`path[data-place-id="${place.name}"]`);
-            if (pathElement) {
-                pathElement.addEventListener('click', function () {
-                    document.getElementById('placeDetails').innerHTML = `
+  document.addEventListener("DOMContentLoaded", function () {
+    const places = JSON.parse(
+      document.getElementById("places-data").textContent
+    );
+    places.forEach((place) => {
+      const imageUrl = "{{MEDIA_URL}}" + place.logo;
+      const pathElement = document.querySelector(
+        `path[data-place-id="${place.name}"]`
+      );
+      if (pathElement) {
+        pathElement.addEventListener("click", function () {
+          console.log(place.name);
+          console.log(pathElement);
+          document.getElementById("placeDetails").innerHTML = `
                         <h2>${place.name}</h2>
                         <p>${place.description}</p>
                         <p>Working hours: ${place.working_hours}</p>
                         <img src="${imageUrl}" alt="${place.name}">
                     `;
-                    document.getElementById('placeDetails').style.display = 'block';
-                });
-            }
+          document.getElementById("placeDetails").style.display = "block";
         });
+      }
     });
+  });
 </script>
 {% endblock %}
